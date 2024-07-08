@@ -31,4 +31,14 @@ export class EmpiresController extends BaseController {
       next(error)
     }
   }
+
+  async destroyEmpire(request, response, next) {
+    try {
+      const idToRemove = request.params.empireId
+      await empiresService.destroyEmpire(idToRemove)
+      response.statusCode
+    } catch (error) {
+      next(error)
+    }
+  }
 }
