@@ -19,6 +19,19 @@ class EmpiresService {
     await empireToDestroy.deleteOne()
     return `deleted ${empireToDestroy.name}`
   }
+
+  async editEmpire(idToEdit, newInfo) {
+    const empireToEdit = await dbContext.Empires.findById(idToEdit)
+    if (empireToEdit === null) throw new Error(`Can't edit empire that doesn't exist`)
+
+    empireToEdit.name = newInfo.name || empireToEdit.name
+    empireToEdit.continents = newInfo.continents || empireToEdit.continents
+    empireToEdit.duration = newInfo.duration || empireToEdit.duration
+    empireToEdit.map = newInfo.map || empireToEdit.map
+
+    await empireToEdit.save()
+    return empireToEdit
+  }
 }
 
 export const empiresService = new EmpiresService()
